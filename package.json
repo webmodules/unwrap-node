@@ -1,0 +1,34 @@
+{
+  "name": "unwrap-node",
+  "version": "0.0.0",
+  "description": "Unwraps a given DOM element and returns a Range where it's children reside",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha -gc --reporter spec --check-leaks test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/webmodules/unwrap-node.git"
+  },
+  "keywords": [
+    "unwrap",
+    "dom",
+    "element",
+    "range",
+    "child",
+    "children",
+    "childNode"
+  ],
+  "author": "Nathan Rajlich <nathan@tootallnate.net> (http://n8.io/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/webmodules/unwrap-node/issues"
+  },
+  "homepage": "https://github.com/webmodules/unwrap-node",
+  "dependencies": {
+    "get-document": "~0.1.1"
+  }
+}
