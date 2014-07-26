@@ -37,4 +37,30 @@ describe('unwrap-node', function () {
     assert.equal(range.endContainer.nodeType, Node.TEXT_NODE);
   });
 
+  it('should remove a 0-width space child node', function () {
+    div = document.createElement('div');
+    div.innerHTML = 'te<b>\u200B</b>st';
+    document.body.appendChild(div);
+
+    var b = div.childNodes[1];
+
+    var range = unwrap(b);
+
+    // test that <b> has been removed from the DOM
+    assert(!b.parentNode);
+
+    // test that the parent <div> has been modified
+    assert.equal(div.innerHTML, 'test');
+
+    // test that the Range is collapsed, with no contents
+    assert.equal(range.toString(), '');
+    assert.equal(range.collapsed, true);
+
+    // test that the Range starts and ends with the parent <div>
+    assert.equal(range.startContainer, div);
+    assert.equal(range.startOffset, 1);
+    assert.equal(range.endContainer, div);
+    assert.equal(range.endOffset, 1);
+  });
+
 });

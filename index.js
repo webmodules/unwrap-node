@@ -35,6 +35,20 @@ function unwrap (source, target, doc) {
   var range = doc.createRange();
   var start, end;
 
+  // Initialize the Range to wrap the `source` element.
+  // This handles the case when the `source` node has no childNodes.
+  range.setStartBefore(source);
+  range.setEndAfter(source);
+
+  // if the first child is a TextNode with the 0-width space inside of it,
+  // then we can safely remove it from the `source`, so that we don't end
+  // up transferring it to the `target` element
+  var first = source.firstChild;
+  if (first && first.nodeType === Node.TEXT_NODE && first.nodeValue === '\u200B') {
+    source.removeChild(first);
+    first = null;
+  }
+
   while (source.childNodes.length > 0) {
     var el = source.childNodes[0];
     if (!start) start = el;
@@ -47,7 +61,7 @@ function unwrap (source, target, doc) {
 
   // set Range "start"
   // find deepest firstChild textNode
-  while (start && start.nodeType != Node.TEXT_NODE) {
+  while (start && start.nodeType !== Node.TEXT_NODE) {
     start = start.firstChild;
   }
   if (start) {
@@ -57,7 +71,7 @@ function unwrap (source, target, doc) {
 
   // set Range "end"
   // find deepest lastChild textNode
-  while (end && end.nodeType != Node.TEXT_NODE) {
+  while (end && end.nodeType !== Node.TEXT_NODE) {
     end = end.lastChild;
   }
   if (end) {
