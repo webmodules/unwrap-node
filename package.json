@@ -1,7 +1,7 @@
 {
   "name": "unwrap-node",
   "version": "0.0.0",
-  "description": "Unwraps a given DOM element and returns a Range where it's children reside",
+  "description": "Unwraps a given DOM element and returns a Range surrounding its child nodes",
   "main": "index.js",
   "directories": {
     "test": "test"
