@@ -26,12 +26,15 @@ describe('unwrap-node', function () {
     // test that <b> has been removed from the DOM
     assert(!b.parentNode);
 
+    // test that the parent <div> has been modified
+    assert.equal(div.innerHTML, 'hello world');
+
     // test that the Range contains the <b> children contents
     assert.equal(range.toString(), 'hello worl');
 
-    // test that the parent <div> has been modified
-    assert.equal(div.innerHTML, 'hello world');
-    console.log(range.startContainer);
+    // test that the Range starts and ends with a TextNode
+    assert.equal(range.startContainer.nodeType, Node.TEXT_NODE);
+    assert.equal(range.endContainer.nodeType, Node.TEXT_NODE);
   });
 
 });

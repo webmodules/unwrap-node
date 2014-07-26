@@ -24,7 +24,7 @@ module.exports = unwrap;
  *   should be inserted. Defaults to `source.parentNode`
  * @param {Document} [doc] - Optional `document` instance to create the Range from
  * @return {Range} Returns a Range instance with its boundaries set to contain
- *   the child nodes
+ *   the child nodes from `source`
  * @public
  */
 
@@ -41,15 +41,28 @@ function unwrap (source, target, doc) {
     end = el;
     target.insertBefore(el, source);
   }
-  target.removeChild(source);
 
-  if (start && end) {
-    range.setStartBefore(start);
-    range.setEndAfter(end);
+  // remove from DOM
+  source.parentNode.removeChild(source);
+
+  // set Range "start"
+  // find deepest firstChild textNode
+  while (start && start.nodeType != Node.TEXT_NODE) {
+    start = start.firstChild;
+  }
+  if (start) {
+    range.setStart(start, 0)
+    range.setEnd(start, 0);
   }
 
-  //console.error(start, end);
-  //console.error(range.startContainer, range.startOffset);
-  //console.error(range.endContainer, range.endOffset);
+  // set Range "end"
+  // find deepest lastChild textNode
+  while (end && end.nodeType != Node.TEXT_NODE) {
+    end = end.lastChild;
+  }
+  if (end) {
+    range.setEnd(end, end.nodeValue.length);
+  }
+
   return range;
 }
