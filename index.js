@@ -49,6 +49,8 @@ function unwrap (source, target, doc) {
     first = null;
   }
 
+  // transfer child nodes to *before* the `source` element in the `target` DOM
+  // element
   while (source.childNodes.length > 0) {
     var el = source.childNodes[0];
     if (!start) start = el;
@@ -56,7 +58,7 @@ function unwrap (source, target, doc) {
     target.insertBefore(el, source);
   }
 
-  // remove from DOM
+  // remove `source` from the DOM
   source.parentNode.removeChild(source);
 
   // set Range "start"
