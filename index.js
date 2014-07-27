@@ -32,27 +32,27 @@ function unwrap (source, target, doc) {
   if (!target) target = source.parentNode;
   if (!doc) doc = getDocument(source) || document;
 
-  var range = doc.createRange();
-  var start, end;
+  var range, start, end, el;
 
   // Initialize the Range to wrap the `source` element.
   // This handles the case when the `source` node has no childNodes.
+  range = doc.createRange();
   range.setStartBefore(source);
   range.setEndAfter(source);
 
   // if the first child is a TextNode with the 0-width space inside of it,
   // then we can safely remove it from the `source`, so that we don't end
   // up transferring it to the `target` element
-  var first = source.firstChild;
-  if (first && first.nodeType === Node.TEXT_NODE && first.nodeValue === '\u200B') {
-    source.removeChild(first);
-    first = null;
+  el = source.firstChild;
+  if (el && el.nodeType === Node.TEXT_NODE && el.nodeValue === '\u200B') {
+    source.removeChild(el);
+    el = null;
   }
 
   // transfer child nodes to *before* the `source` element in the `target` DOM
   // element
   while (source.childNodes.length > 0) {
-    var el = source.childNodes[0];
+    el = source.childNodes[0];
     if (!start) start = el;
     end = el;
     target.insertBefore(el, source);
