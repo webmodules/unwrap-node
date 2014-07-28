@@ -3,6 +3,7 @@
  * Module dependencies.
  */
 
+var findWithin = require('find-within');
 var getDocument = require('get-document');
 
 /**
@@ -32,7 +33,7 @@ function unwrap (source, target, doc) {
   if (!target) target = source.parentNode;
   if (!doc) doc = getDocument(source) || document;
 
-  var range, start, end, el;
+  var range, start, first, end, el;
 
   // Initialize the Range to wrap the `source` element.
   // This handles the case when the `source` node has no childNodes.
@@ -61,21 +62,17 @@ function unwrap (source, target, doc) {
   // remove `source` from the DOM
   source.parentNode.removeChild(source);
 
-  // set Range "start"
-  // find deepest firstChild textNode
-  while (start && start.nodeType !== Node.TEXT_NODE) {
-    start = start.firstChild;
-  }
+  // set Range "start" to deepest `firstChild` textNode
+  first = true;
+  start = findWithin(start, Node.TEXT_NODE, first);
   if (start) {
     range.setStart(start, 0)
     range.setEnd(start, 0);
   }
 
-  // set Range "end"
-  // find deepest lastChild textNode
-  while (end && end.nodeType !== Node.TEXT_NODE) {
-    end = end.lastChild;
-  }
+  // set Range "end" to deepest `lastChild` textNode
+  first = false;
+  end = findWithin(end, Node.TEXT_NODE, first);
   if (end) {
     range.setEnd(end, end.nodeValue.length);
   }
