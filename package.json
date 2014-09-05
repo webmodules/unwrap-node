@@ -3,11 +3,8 @@
   "version": "0.0.1",
   "description": "Unwraps a given DOM element and returns a Range surrounding its child nodes",
   "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
-    "test": "mocha -gc --reporter spec --check-leaks test/*.js"
+    "test": "make test"
   },
   "repository": {
     "type": "git",
@@ -31,5 +28,8 @@
   "dependencies": {
     "find-within": "0.0.1",
     "get-document": "~0.1.1"
+  },
+  "devDependencies": {
+    "zuul": "~1.10.2"
   }
 }
