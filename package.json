@@ -27,7 +27,7 @@
   "homepage": "https://github.com/webmodules/unwrap-node",
   "dependencies": {
     "find-within": "0.0.1",
-    "get-document": "~0.1.1"
+    "get-document": "~1.0.0"
   },
   "devDependencies": {
     "zuul": "~1.10.2"
